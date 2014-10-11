@@ -1,0 +1,6 @@
+name: RestApi
+description: A sample rest full web service
+dependencies:
+  browser: any
+  http_server: any
+  redstone: any
