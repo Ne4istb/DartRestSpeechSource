@@ -1,4 +1,4 @@
 DartRestSpeechSource
 ====================
 
-Sources for talk on GDG devfest Ukraine 2014 "RESTful API with Dart"
+Sources for talk "RESTful API with Dart" on GDG devfest Ukraine 2014 
