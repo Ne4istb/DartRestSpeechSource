@@ -76,8 +76,11 @@
     <Content Include="Web.config" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="App_Start\NotFoundFilter.cs" />
     <Compile Include="App_Start\WebApiConfig.cs" />
     <Compile Include="Controllers\DevFestSpeechController.cs" />
+    <Compile Include="Controllers\ErrorHandlingController.cs" />
+    <Compile Include="Controllers\HeadersController.cs" />
     <Compile Include="Controllers\HelloController.cs" />
     <Compile Include="Controllers\StatusCodesController.cs" />
     <Compile Include="Global.asax.cs">

@@ -5,4 +5,4 @@ dependencies:
   http_server: any
   redstone: any
   start: any
-  shelf: any
+  shelf: 0.5.5

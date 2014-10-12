@@ -45,7 +45,10 @@ namespace REST.Controllers
 	{
 		public Speech Get(Guid id)
 		{
-			throw new NotImplementedException();
+			return new Speech()
+			{
+				Version = 5
+			};
 		}
 
 		public void Add(Speech speech)
@@ -66,5 +69,6 @@ namespace REST.Controllers
 
 	public class Speech
 	{
+		public int Version { get; set; }
 	}
 }
