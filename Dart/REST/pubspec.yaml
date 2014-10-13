@@ -5,4 +5,5 @@ dependencies:
   http_server: any
   redstone: any
   start: any
-  shelf: 0.5.5
+  shelf: any
+  redstone_mapper: any

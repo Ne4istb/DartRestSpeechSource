@@ -17,7 +17,7 @@ namespace REST.Controllers
 		}
 
 		[HttpGet]
-		[Route("devfest/speech/{id}")]
+//		[Route("devfest/speech/{id}")]
 		public HttpResponseMessage Get(Guid id)
 		{
 			var speech = speeches.Get(id);
