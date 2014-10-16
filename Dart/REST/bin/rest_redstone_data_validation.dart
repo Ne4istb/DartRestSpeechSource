@@ -14,22 +14,41 @@ class Speech{
   String _name;
 
   @Field()
+  @NotEmpty()
   String get name => _name;
 
   @Field()
   set name(String value) => _name = value;
 
+  @Field()
+  @Range(min: 10, required: true)
+  String description;
+
+  @Field()
+  @Range(min: 20, required: true)
+  int length;
+
   @Field(view: "author_name")
   String author;
-}
 
-@app.Route('/devfest/speech/add', methods: const[app.POST])
+  @Field()
+  @OnlyNumbers()
+  @Matches(r"(\d{10})")
+  String phoneNumber;
+}
+var speechValidator = new Validator(Speech, true);
+
+@app.Route('/devfest/speeches', methods: const[app.POST])
 addSpeech(@Decode() Speech speech) {
 
+  ValidationError err = speechValidator.execute(speech);
+  if (err != null) {
+    print(err);
+  }
 }
 
-@app.Route('/devfest/speech/list')
+@app.Route('/devfest/speeches')
 @Encode()
-List<Speech> listSpeeches() {
+Speech get() {
 
 }

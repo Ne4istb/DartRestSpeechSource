@@ -5,7 +5,7 @@ void main() {
 
     var speeches = new SpeechRepository();
 
-    app.get('/devfest/speech/:id').listen((request) {
+    app.get('/devfest/speeches/:id').listen((request) {
 
       var id = request.param('id');
       var speech = speeches.get(id);
@@ -20,7 +20,7 @@ void main() {
       });
     });
 
-    app.put('/devfest/speech/:id').listen((request) {
+    app.put('/devfest/speeches/:id').listen((request) {
 
       var id = request.param('id');
 
@@ -30,7 +30,7 @@ void main() {
       });
     });
 
-    app.delete('/devfest/speech/:id').listen((request) {
+    app.delete('/devfest/speeches/:id').listen((request) {
 
       var id = request.param('id');
       var speech = speeches.delete(id);
@@ -52,7 +52,7 @@ class SpeechRepository {
 
 
 //
-//app.get('/devfest/speech/:id', function(request, response){
+//app.get('/devfest/speeches/:id', function(request, response){
 //
 //  var id = request.params.id;
 //  var speech = speeches.get(id);
@@ -60,7 +60,7 @@ class SpeechRepository {
 //  response.end(speech);
 //});
 //
-//app.delete('/devfest/speech/:id', function(request, response){
+//app.delete('/devfest/speeches/:id', function(request, response){
 //
 //  var id = request.params.id;
 //  speeches.remove(id);
@@ -68,7 +68,7 @@ class SpeechRepository {
 //  response.end();
 //});
 //
-//app.put('/devfest/speech/:id', function(request, response){
+//app.put('/devfest/speeches/:id', function(request, response){
 //
 //  var id = request.params.id;
 //  var speech = request.body;

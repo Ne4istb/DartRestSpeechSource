@@ -30,7 +30,8 @@ class DevFestService extends BaseApiService {
       return new app.ErrorResponse(HttpStatus.INTERNAL_SERVER_ERROR, exception);
     }
 
-    if (!speech)return new app.ErrorResponse(HttpStatus.NOT_FOUND, "Speech is not found");
+    if (speech == null)
+      return new app.ErrorResponse(HttpStatus.NOT_FOUND, "Speech is not found");
 
     return new shelf.Response.ok(JSON.encode(speech));
   }
