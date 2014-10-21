@@ -19,7 +19,7 @@ var speeches = {
 	}
 };
 
-app.get('/devfest/speech/:id', function (request, response, next) {
+app.get('/devfest/speeches/:id', function (request, response, next) {
 
 	var id = request.params.id;
 	var speech = speeches.get(id);
@@ -33,7 +33,6 @@ app.get('/devfest/speech/:id', function (request, response, next) {
 
 		return next(notFound);
 	}
-
 });
 
 app.use(function(error, request, response, next) {

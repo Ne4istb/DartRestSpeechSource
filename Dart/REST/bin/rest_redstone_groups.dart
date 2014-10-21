@@ -1,6 +1,6 @@
 import 'package:redstone/server.dart' as app;
 
-@app.Group("/devfest/speech")
+@app.Group("/devfest/speeches")
 class DevFestSpeechService {
 
   var speeches;

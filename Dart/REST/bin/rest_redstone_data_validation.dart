@@ -1,8 +1,8 @@
 import 'package:redstone/server.dart' as app;
 import 'package:shelf/shelf.dart' as shelf;
+
 import 'package:redstone_mapper/mapper.dart';
 import 'package:redstone_mapper/plugin.dart';
-
 
 main() {
   app.addPlugin(getMapperPlugin());
@@ -36,6 +36,7 @@ class Speech{
   @Matches(r"(\d{10})")
   String phoneNumber;
 }
+
 var speechValidator = new Validator(Speech, true);
 
 @app.Route('/devfest/speeches', methods: const[app.POST])

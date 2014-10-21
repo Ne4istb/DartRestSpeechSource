@@ -21,15 +21,15 @@ var speechRouter = router(handlerAdapter: handlerAdapter())
   ..get('/devfest/speeches/{id}', _getSpeech)
   ..post('/devfest/speeches', _create);
 
+void main() {
+  io.serve(handler, 'localhost', 8080);
+}
+
 var handler = const Pipeline()
   .addMiddleware(exceptionResponse())
   .addMiddleware(loginMiddleware())
   .addMiddleware(dbConnMiddleware())
   .addHandler(speechRouter.handler);
-
-void main() {
-  io.serve(handler, 'localhost', 8080);
-}
 
 Middleware loginMiddleware() {
 

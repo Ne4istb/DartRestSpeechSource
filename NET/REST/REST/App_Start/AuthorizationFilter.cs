@@ -19,19 +19,3 @@ namespace REST
 		}
 	}
 }
-//
-//@app.Interceptor(r'/devfest/.*', chainIdx: 0)
-//loginFilter() {
-//  if (app.request.session["username"] != null)
-//    app.chain.next();
-//  else
-//    app.chain.interrupt(statusCode: HttpStatus.UNAUTHORIZED);
-//    //or app.redirect("/login.html");
-//}
-//
-//@app.Interceptor(r'/devfest/.*', chainIdx: 1)
-//dbConnInterceptor() {
-//  var connection = new DbConn();
-//  app.request.attributes["dbConn"] = connection;
-//  app.chain.next(() => connection.close());
-//}

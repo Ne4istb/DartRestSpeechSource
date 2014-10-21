@@ -7,6 +7,10 @@ import 'dart:async';
 
 var speeches = new SpeechRepository();
 
+var speechRouter = router(handlerAdapter: handlerAdapter())
+  ..get('{id}', _getSpeech)
+  ..post('/devfest/speeches', _create);
+
 @ResponseHeaders(successStatus: 200)
 Speech _getSpeech(String id) => speeches.get(id);
 
@@ -15,10 +19,6 @@ Speech _create(@RequestBody() Speech speech) {
   speeches.add(speech);
   return speech;
 }
-
-var speechRouter = router(handlerAdapter: handlerAdapter())
-  ..get('{id}', _getSpeech)
-  ..post('/devfest/speeches', _create);
 
 void main() {
   io.serve(speechRouter.handler, 'localhost', 8080);

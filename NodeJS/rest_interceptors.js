@@ -3,7 +3,6 @@ var bodyParser = require('body-parser');
 
 var app = express();
 app.use(bodyParser.json({ type: 'application/json' }));
-request.session = {username: ""};
 
 var speeches = {
 	get: function (id) {
@@ -21,19 +20,29 @@ var speeches = {
 };
 
 app.use(function(request, response, next) {
-	console.log('catch');
-	if (request.session && request.session.username == "bhj")
+	if (request.session && request.session.username)
 		next();
 	else
 		response.status(401).end();
 });
 
-app.get('/devfest/speech/:id', function (request, response, next) {
+app.use(function (request, response, next) {
+	request.attributes["dbConn"] = new DbConn();
+	next();
+});
+
+app.get('/devfest/speeches/:id', function (request, response, next) {
 
 	var id = request.params.id;
 	var speech = speeches.get(id);
 
 	response.status(200).send(speech);
+	next();
+});
+
+app.use(function (request) {
+	var connection = request.attributes["dbConn"];
+	connection.close();
 });
 
 app.listen(8080);

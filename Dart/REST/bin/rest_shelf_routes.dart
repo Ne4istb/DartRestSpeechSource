@@ -5,7 +5,8 @@ import 'package:shelf_route/shelf_route.dart';
 void main() {
 
   var helloRouter = router()
-    ..get('/hello/{name}', (request) => new Response.ok("Hello, ${getPathParameter(request, 'name')}!"));
+    ..get('/hello/{name}', (request) =>
+      new Response.ok("Hello, ${getPathParameter(request, 'name')}!"));
 
   io.serve(helloRouter.handler, 'localhost', 8080);
 }

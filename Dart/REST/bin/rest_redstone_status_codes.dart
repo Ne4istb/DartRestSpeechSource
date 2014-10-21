@@ -2,7 +2,7 @@ import 'package:redstone/server.dart' as app;
 import 'package:shelf/shelf.dart' as shelf;
 import 'dart:io' show HttpStatus;
 
-@app.Group("/devfest/speech")
+@app.Group("/devfest/speeches")
 class DevFestService extends BaseApiService {
 
   var speeches;
@@ -14,13 +14,13 @@ class DevFestService extends BaseApiService {
   @app.Route("/:id")
   get(String id) {
     var speech = speeches.get(id);
-    return new app.ErrorResponse(200, speech);
+    return new shelf.Response.ok(speech);
   }
 
   @app.Route("/", methods: const [app.POST])
   add(@app.Body(app.JSON) Map speech) {
     speeches.add(speech);
-    return new app.ErrorResponse(201, null);
+    return new shelf.Response(201);
   }
 }
 
@@ -55,7 +55,7 @@ class SpeechRepository {
   delete(id) => print("Delete $id");
 }
 //
-//@app.Group("/devfest/speech")
+//@app.Group("/devfest/speeches")
 //class DevFestService extends BaseApiService {
 //
 //  var speeches;

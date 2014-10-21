@@ -6,20 +6,20 @@ import 'package:shelf_exception_response/exception_response.dart';
 import 'dart:convert' show JSON;
 import 'dart:async';
 
-var speeches = new SpeechRepository();
+import 'package:constrain/constrain.dart';
+import 'package:matcher/matcher.dart';
 
-@ResponseHeaders(successStatus: 200)
-Speech _getSpeech(String id) => speeches.get(id);
+var handlerAdapter = handlerAdapter(validateParameters: true);
+var speechRouter = router(handlerAdapter: handlerAdapter)
+  ..post('/devfest/speeches', _create);
+
+var speeches = new SpeechRepository();
 
 @ResponseHeaders.created(idField: #id)
 Speech _create(@RequestBody() Speech speech) {
   speeches.add(speech);
   return speech;
 }
-
-var speechRouter = router(handlerAdapter: handlerAdapter(validateParameters: true))
-  ..get('/devfest/speeches/{id}', _getSpeech)
-  ..post('/devfest/speeches', _create);
 
 var handler = const Pipeline()
 .addMiddleware(exceptionResponse())
@@ -29,33 +29,37 @@ void main() {
   io.serve(handler, 'localhost', 8080);
 }
 
-//
-//class Speech {
-//  @NotNull()
-//  String id;
-//
-//  Speech.fromJson(Map json) :
-//  this.id = json['test'];
-//
-//  Map toJson() => { 'test': id };
-//}
-
 class Speech {
+
+  String _name;
+
   @NotNull()
-  @Ensure(nameIsAtLeast3Chars, description: 'name must be at least 3 characters')
-  final String name;
+  @Ensure(isNotEmpty)
+  String get name => _name;
 
+  @NotNull()
+  set name(String value) => _name = value;
 
-  Speech.build({this.name});
+  @NotNull()
+  @Ensure(descriptionIsAtLeast10Chars,
+          description: 'min 10 characters')
+  final String description;
+
+  final String author;
 
   Speech.fromJson(Map json) :
-  this.name = json['name'];
+    this._name = json['name'],
+    this.description = json['description'],
+    this.author = json['author_name'];
 
-  Map toJson() => { 'name': name };
-
-  String toString() => 'Speech[name: $name]';
+  Map toJson() =>
+    { 'name': name,
+      'description': description,
+      'author_name': author };
 }
 
+Matcher descriptionIsAtLeast10Chars() =>
+  hasLength(greaterThan(10));
 
 class SpeechRepository {
   find(stream, name) => "test";

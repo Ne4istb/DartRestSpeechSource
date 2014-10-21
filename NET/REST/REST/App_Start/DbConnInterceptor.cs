@@ -13,6 +13,7 @@ namespace REST.App_Start
 		{
 			var dbConn = new DbConn(); 
 			dbConn.Open();
+			HttpContext.Current.Items.Add("DbConn", dbConn);
 
 			base.OnActionExecuting(actionContext);
 		}

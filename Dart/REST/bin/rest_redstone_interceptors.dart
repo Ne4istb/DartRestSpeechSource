@@ -3,7 +3,7 @@ import 'package:shelf/shelf.dart' as shelf;
 import 'dart:convert' show JSON;
 import 'dart:io';
 
-@app.Group("/devfest/speech")
+@app.Group("/devfest/speeches")
 class DevFestService extends BaseApiService {
 
   var speeches;

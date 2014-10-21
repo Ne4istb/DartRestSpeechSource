@@ -22,23 +22,17 @@ void main() {
 
     ..post('/devfest/speeches', (request) {
       return request.readAsString().then((String content) {
-        var speech = JSON.decode(content);
-        speeches.add(speech);
+        speeches.add( JSON.decode(content));
         return new Response(201);
       });
     })
 
     ..put('/devfest/speeches/{id}', (request) {
       return request.readAsString().then((String content) {
-
-        var id = getPathParameter(request, 'id');
-        var speech = JSON.decode(content);
-
-        speeches.update(id, speech);
-
+        speeches.update(getPathParameter(request, 'id'), JSON.decode(content));
         return new Response(204);
       });
-  });
+    });
 
   io.serve(speechRouter.handler, 'localhost', 8080);
 }

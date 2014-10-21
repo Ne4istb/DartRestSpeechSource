@@ -6,12 +6,12 @@ void main() {
 
     var speeches = new SpeechRepository();
 
-    app.get('/devfest/speech').listen((request) {
+    app.get('/devfest/speeches').listen((request) {
       var speech = speeches.get();
       return new shelf.Response.ok(speech);
     });
 
-    app.post('/devfest/speech').listen((request) {
+    app.post('/devfest/speeches').listen((request) {
       request.payload().then((speech){
         speeches.add(speech);
         return new shelf.Response(201);

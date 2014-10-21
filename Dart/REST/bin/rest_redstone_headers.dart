@@ -2,7 +2,7 @@ import 'package:redstone/server.dart' as app;
 import 'package:shelf/shelf.dart' as shelf;
 import 'dart:convert' show UTF8, JSON;
 
-@app.Group("/devfest/speech")
+@app.Group("/devfest/speeches")
 class DevFestService extends BaseApiService {
   var speeches;
 
@@ -20,7 +20,6 @@ class DevFestService extends BaseApiService {
       .ok(JSON.encode(speech))
 
       .change(headers: {
-        "Content-Type": "application/json",
         "ETag": "\"$version\"",
         "Access-Control-Allow-Origin": "*"
       });

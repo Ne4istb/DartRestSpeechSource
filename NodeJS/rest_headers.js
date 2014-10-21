@@ -19,7 +19,7 @@ var speeches = {
 	}
 };
 
-app.get('/devfest/speech/:id', function (request, response) {
+app.get('/devfest/speeches/:id', function (request, response) {
 
 	var id = request.params.id;
 	var speech = speeches.get(id);

@@ -19,14 +19,14 @@ var speeches = {
 	}
 };
 
-app.get('/devfest/speech', function(request, response){
+app.get('/devfest/speeches', function(request, response){
 
 	var speech = speeches.get();
 
 	response.status(200).end(speech);
 });
 
-app.post('/devfest/speech', function(request, response){
+app.post('/devfest/speeches', function(request, response){
 
 	speeches.add(request.body);
 

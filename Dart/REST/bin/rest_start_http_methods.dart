@@ -13,7 +13,7 @@ void main() {
       request.response.json(speech);
     });
 
-    app.post('/devfest/speech').listen((request) {
+    app.post('/devfest/speeches').listen((request) {
       request.payload().then((speech){
         speeches.add(speech);
         request.response.close();
@@ -77,7 +77,7 @@ class SpeechRepository {
 //  response.end();
 //});
 //
-//app.post('/devfest/speech', function(request, response){
+//app.post('/devfest/speeches', function(request, response){
 //
 //  var speech = request.body;
 //  speeches.add(speech);

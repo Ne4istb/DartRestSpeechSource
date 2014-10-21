@@ -10,73 +10,48 @@ var speeches = new SpeechRepository();
 
 @ResponseHeaders()
 Speech _getSpeech(String id) {
-  Object speech;
-  try {
-    speech = speeches.get(id);
-  }
-  on SpeechException catch(exception) {
-    throw new SpeechHttpException(exception);
-  }
-
-  if (speech == null)
-    throw new NotFoundException();
-
+  var speech = speeches.get(id);
+  if (speech == null) throw new NotFoundException();
   return speech;
 }
 
-//@ResponseHeaders.created(idField: #id)
-//Speech _create(@RequestBody() Speech speech) {
-//  speeches.add(speech);
-//  return speech;
-//}
-//
 var speechRouter = router(handlerAdapter: handlerAdapter())
-  ..get('/ohnoes', () => throw new SpeechHttpException())
-  ..get('/devfest/speeches/{id}', _getSpeech, middleware: exceptionResponse());
-//  ..post('/devfest/speeches', _create);
+  ..get('/devfest/speeches/{id}', _getSpeech, middleware: speechExceptionHandler());
 
-var handler = const Pipeline()
-// add exception response middleware to the pipeline
-.addMiddleware(exceptionResponse()).addHandler(speechRouter.handler);
+var handler = const Pipeline().addMiddleware(notFound()).addHandler(speechRouter.handler);
+
+Middleware notFound() {
+  return (Handler handler) {
+    return (Request request) {
+      return new Future.sync(() => handler(request))
+      .then((response) => response)
+      .catchError((_) => new Response.found("/error/not_found.html"), test: (e) => e is NotFoundException);
+    };
+  };
+}
+
+Middleware speechExceptionHandler() {
+  return (Handler handler) {
+    return (Request request) {
+      return new Future.sync(() => handler(request)).then((response) => response)
+      .catchError((error, stackTrace) {
+        //process
+        return new Response.internalServerError(body: error.toString());
+      }, test: (e) => e is SpeechException);
+    };
+  };
+}
 
 void main() {
   io.serve(handler, 'localhost', 8080);
 }
 
-//
-//@app.Route("/:id")
-//get(String id) {
-//
-//  Object speech;
-//  try {
-//    speech = speeches.get(id);
-//  }
-//  on SpeechException catch(exception) {
-//    return new SpeechHttpException();
-//  }
-//
-//  if (!speech)return new app.ErrorResponse(HttpStatus.NOT_FOUND, "Speech is not found");
-//
-//  return new shelf.Response.ok(JSON.encode(speech));
-//}
+
+
 
 class SpeechException extends Error {
 
   SpeechException() : super();
-}
-
-class SpeechHttpException extends HttpException {
-
-  final int status = 500;
-  final Map<String, dynamic> data;
-
-  String message;
-
-  SpeechHttpException([Error exception, this.data]) {
-    message = exception.toString();
-    print("test");
-  }
-
 }
 
 class Speech {
@@ -94,7 +69,7 @@ class SpeechRepository {
 
   like(id) => print(id);
 
-  get(id) => id;
+  get(id) => throw new SpeechException();
 
   update(id, data) => print("Update $id $data");
 
